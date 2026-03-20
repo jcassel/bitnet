@@ -40,8 +40,9 @@ jobs:
             org.opencontainers.image.description=https://huggingface.co/microsoft/bitnet-b1.58-2B-4T-gguf
 
       - name: Test image
-        run: podman run --rm -it bitnet:latest python3 run_inference.py -m ggml-model-i2_s.gguf -p "Why is the sky blue?"
-
+#       run: podman run --rm -it bitnet:latest python3 run_inference.py -m ggml-model-i2_s.gguf -p "Why is the sky blue?"
+        run: podman run --rm -it -p 8080:8080 bitnet:latest python3 run_inference.py -m ggml-model-i2_s.gguf -p "Why is the sky blue?" --host 0.0.0.0 --port 8080 -t 8 2048
+        
       - name: Push Image to GHCR
         uses: redhat-actions/push-to-registry@v2
         with:
